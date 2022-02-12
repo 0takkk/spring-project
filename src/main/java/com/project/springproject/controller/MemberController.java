@@ -27,7 +27,7 @@ public class MemberController {
         return "members/new";
     }
 
-    @PostMapping("/members/new")
+   /* @PostMapping("/members/new")
     public String create(@Valid MemberDto memberDto, BindingResult bindingResult){
         log.info("create");
         if(bindingResult.hasErrors()){
@@ -37,6 +37,23 @@ public class MemberController {
         memberService.join(memberDto);
         log.info("회원가입 성공");
         return "redirect:/";
-    }
+    }*/
 
+    @PostMapping("/members/new")
+    public String create(@Valid MemberDto memberDto, BindingResult bindingResult){
+        log.info("create");
+        if(bindingResult.hasErrors()){
+            return "/members/new";
+        }
+        try{
+            memberService.join(memberDto);
+        } catch(IllegalStateException e){
+            log.info("중복 아이디");
+            bindingResult.reject("duplicateLogId", "이미 존재하는 아이디입니다.");
+            return "/members/new";
+        }
+
+        log.info("회원가입 성공");
+        return "redirect:/";
+    }
 }

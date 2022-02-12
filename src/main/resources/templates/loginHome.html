@@ -10,11 +10,14 @@
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
     <div class="jumbotron">
-        <h1>HELLO SHOP</h1>
+        <h3 class="mb-3" th:text="|${member.name}님 안녕하세요.|"></h3>
         <p class="lead">회원 기능</p>
         <p>
-            <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>
-            <a class="btn btn-lg btn-secondary" href="/login">로그인</a>
+<!--            <a class="btn btn-lg btn-secondary" href="/members/new">회원 수정</a>-->
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-lg btn-secondary" type="submit">로그아웃</button>
+            </form>
+<!--            <a class="btn btn-lg btn-secondary" th:method="post" href="/logout">로그아웃</a>-->
         </p>
         <p class="lead">게시판 기능</p>
         <p>
