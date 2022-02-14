@@ -13,10 +13,10 @@ spring:
       format_sql: true
       ddl-auto: create
 
-#  mvc:
-#    hiddenmethod:
-#      filter:
-#        enabled: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 logging:
   level:

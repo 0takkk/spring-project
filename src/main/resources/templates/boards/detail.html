@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>수정일</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${boardDto.id}"></td>
+                <td th:text="${boardDto.title}"></td>
+                <td th:text="${boardDto.writer}"></td>
+                <td th:text="${#temporals.format(boardDto.modifiedDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(boardDto.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+
+            <tr>
+                <td colspan="5" th:text="${boardDto.content}">
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+<!--    <form th:action="@{/boards/new}" th:object="${boardDto}" method="post">-->
+<!--        <div class="form-group">-->
+<!--            <h3 th:text="|제목 : ${boardDto.title}|"/>-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <h6 th:inline="text">수정일 : [[${#temporals.format(boardDto.modifiedDate, 'yyyy-MM-dd HH:mm')}]]</h6>-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <h6 th:inline="text">작성일 : [[${#temporals.format(boardDto.createdDate, 'yyyy-MM-dd HH:mm')}]]</h6>-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <h6 th:text="|작성자 : ${boardDto.writer}|"/>-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <h6 th:text="${boardDto.content}"></h6>-->
+<!--        </div>z-->
+
+<!--        <button type="submit" class="btn btn-primary">등록</button>-->
+<!--    </form>-->
+
+</div>
+</body>
+</html>

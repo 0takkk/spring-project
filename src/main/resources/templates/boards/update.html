@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <form th:action="@{'/boards/edit/' + ${boardDto.id}}" th:object="${boardDto}" method="post">
+        <input type="hidden" name="_method" value="PUT"/>
+
+        <label th:for="title">제목</label>
+        <div class="form-group">
+            <input type="text" th:field="*{title}" class="form-control" th:value="*{title}"
+                   th:errorclass="fieldError"/>
+            <div class="fieldError" th:errors="*{title}"/>
+        </div>
+
+        <label th:for="title">내용</label>
+        <div class="form-group">
+            <textarea rows="30" cols="100" th:field="*{content}" class="form-control" th:value="*{content}"
+                      th:errorclass="fieldError"/>
+            <div class="fieldError" th:errors="*{content}"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">수정</button>
+    </form>
+
+</div>
+</body>
+</html>
