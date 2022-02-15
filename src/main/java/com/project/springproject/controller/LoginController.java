@@ -2,7 +2,6 @@ package com.project.springproject.controller;
 
 import com.project.springproject.domain.Member;
 import com.project.springproject.dto.LoginDto;
-import com.project.springproject.dto.MemberDto;
 import com.project.springproject.service.LoginService;
 import com.project.springproject.web.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,9 +34,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated @ModelAttribute("loginDto") LoginDto loginDto, BindingResult bindingResult,
+    public String login(@Validated @ModelAttribute LoginDto loginDto, BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request){
+
         log.info("login");
+        log.info("login Param {}", redirectURL);
         if(bindingResult.hasErrors()){
             return "login/loginForm";
         }
@@ -55,7 +58,7 @@ public class LoginController {
         // 세션에 로그인 회원 정보 보관
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @PostMapping("/logout")
