@@ -11,9 +11,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name="members")
+@SequenceGenerator(name = "MEMBER_SEQ_GENERATOR", sequenceName = "MEMBER_SEQ")
 public class Member {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
     private Long id;
 
     @Column(length=10, nullable = false)
