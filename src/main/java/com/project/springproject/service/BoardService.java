@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,34 +35,17 @@ public class BoardService {
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for (Board board : boards) {
-            BoardDto boardDto = BoardDto.builder()
-                    .id(board.getId())
-                    .writer(board.getWriter())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .createdDate(board.getCreateDate())
-                    .modifiedDate(board.getModifiedDate())
-                    .build();
-
-            boardDtoList.add(boardDto);
+            boardDtoList.add(convertEntityToDto(board));
         }
 
         return boardDtoList;
     }
 
+
+
     public BoardDto getBoard(Long id){
         Board board = boardRepository.findById(id);
-
-        BoardDto boardDto = BoardDto.builder()
-                .id(board.getId())
-                .title(board.getTitle())
-                .writer(board.getWriter())
-                .content(board.getContent())
-                .createdDate(board.getCreateDate())
-                .modifiedDate(board.getModifiedDate())
-                .build();
-
-        return boardDto;
+        return convertEntityToDto(board);
     }
 
     @Transactional
@@ -69,5 +53,45 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
+    public List<BoardDto> searchBoardByTitle(String keyword){
+        log.info("search by title");
 
+        List<Board> boards = boardRepository.searchByTitle(keyword);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        if(boards.isEmpty()) return boardDtoList;
+
+        for (Board board : boards) {
+            boardDtoList.add(convertEntityToDto(board));
+        }
+
+        return boardDtoList;
+    }
+
+    public List<BoardDto> searchBoardByWriter(String keyword){
+        log.info("search by writer");
+
+        List<Board> boards = boardRepository.searchByWriter(keyword);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        if(boards.isEmpty()) return boardDtoList;
+
+        for (Board board : boards) {
+            boardDtoList.add(convertEntityToDto(board));
+        }
+
+        return boardDtoList;
+    }
+
+
+    private BoardDto convertEntityToDto(Board board) {
+        return BoardDto.builder()
+                .id(board.getId())
+                .writer(board.getWriter())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .createdDate(board.getCreateDate())
+                .modifiedDate(board.getModifiedDate())
+                .build();
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -95,5 +96,21 @@ public class BoardController {
         boardService.deleteBoard(id);
         log.info("delete success");
         return "redirect:/boards";
+    }
+
+    @PostMapping("/boards/search")
+    public String search(@RequestParam String keyword, @RequestParam String searchType, Model model){
+        log.info("searchType={}", searchType);
+
+        List<BoardDto> boardList = new ArrayList<>();
+
+        if(searchType.equals("title")){
+            boardList = boardService.searchBoardByTitle(keyword);
+        } else if(searchType.equals("writer")){
+            boardList = boardService.searchBoardByWriter(keyword);
+        }
+
+        model.addAttribute("boardList", boardList);
+        return "boards/list";
     }
 }

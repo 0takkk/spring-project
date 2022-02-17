@@ -27,7 +27,7 @@ public class BoardRepository {
     }
 
     public List<Board> findAll(){
-        return em.createQuery("select b from Board b", Board.class)
+        return em.createQuery("select b from Board b order by b.id desc", Board.class)
                 .getResultList();
     }
 
@@ -39,5 +39,17 @@ public class BoardRepository {
 
     public void deleteById(Long id){
         em.remove(em.find(Board.class, id));
+    }
+
+    public List<Board> searchByTitle(String keyword){
+        return em.createQuery("select b from Board b where b.title like concat('%', :keyword, '%') order by b.id desc", Board.class)
+                .setParameter("keyword", keyword)
+                .getResultList();
+    }
+
+    public List<Board> searchByWriter(String keyword){
+        return em.createQuery("select b from Board b where b.writer like concat('%', :keyword, '%') order by b.id desc", Board.class)
+                .setParameter("keyword", keyword)
+                .getResultList();
     }
 }
