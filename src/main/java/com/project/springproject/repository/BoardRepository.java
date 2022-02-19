@@ -26,9 +26,16 @@ public class BoardRepository {
         return em.find(Board.class, id);
     }
 
-    public List<Board> findAll(){
+    public List<Board> findAll(int pageNum, int page_post_count){
         return em.createQuery("select b from Board b order by b.id desc", Board.class)
+                .setFirstResult(pageNum * page_post_count)
+                .setMaxResults(page_post_count)
                 .getResultList();
+    }
+
+    public Long getPageList(){
+        return em.createQuery("select b from Board b", Board.class)
+                .getResultStream().count();
     }
 
     public List<Board> findByWriter(String writer){

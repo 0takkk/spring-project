@@ -20,6 +20,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private static final int PAGE_POST_COUNT = 5;  // 한 페이지에 존재하는 게시글 수
 
     @Transactional
     public Long saveBoard(BoardDto boardDto, Member loginMember){
@@ -30,8 +31,8 @@ public class BoardService {
         return board.getId();
     }
 
-    public List<BoardDto> getBoardList(){
-        List<Board> boards = boardRepository.findAll();
+    public List<BoardDto> getBoardList(int pageNum){
+        List<Board> boards = boardRepository.findAll(pageNum, PAGE_POST_COUNT);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for (Board board : boards) {
@@ -41,7 +42,9 @@ public class BoardService {
         return boardDtoList;
     }
 
-
+    public Long getPageCount(){
+        return (long)Math.ceil(boardRepository.getPageList() / (double)PAGE_POST_COUNT);
+    }
 
     public BoardDto getBoard(Long id){
         Board board = boardRepository.findById(id);

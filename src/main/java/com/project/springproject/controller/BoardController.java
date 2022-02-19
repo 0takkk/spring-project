@@ -23,9 +23,15 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/boards")
-    public String list(Model model){
-        List<BoardDto> boardList = boardService.getBoardList();
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum){
+        List<BoardDto> boardList = boardService.getBoardList(pageNum-1);
+        Long pageCount = boardService.getPageCount();
+
+        log.info("pageCount={}",pageCount);
+
         model.addAttribute("boardList", boardList);
+        model.addAttribute("pageCount", pageCount);
+
         return "boards/list";
     }
 

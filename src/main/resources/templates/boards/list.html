@@ -43,21 +43,11 @@
     </form>
 
 
-<!--    <div class="row">-->
-<!--        <div class="col">-->
-<!--            <select class="form-select">-->
-<!--                <option value="">==검색 종류==</option>-->
-<!--                <option value="">작성자</option>-->
-<!--                <option value="">제목</option>-->
-<!--            </select>-->
-<!--        </div>-->
-<!--        <div class="col">-->
-<!--            <form action="/boards/search" method="post">-->
-<!--                <input name="keyword" type="text" placeholder="검색어를 입력하세요">-->
-<!--                <button class="btn-primary">검색하기</button>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div>
+        <span th:each="pageNum : ${#numbers.sequence(1, pageCount)}" th:inline="text">
+            <a th:href="@{'?page=' + ${pageNum}}">[[${pageNum}]]</a>
+        </span>
+    </div>
 
 </div>
 </body>
