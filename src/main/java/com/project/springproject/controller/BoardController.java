@@ -29,7 +29,7 @@ public class BoardController {
         return "boards/list";
     }
 
-    @GetMapping("/boards/new")
+    @GetMapping("/newBoard")
     public String createBoard(Model model){
         log.info("createBoard");
 
@@ -37,7 +37,7 @@ public class BoardController {
         return "boards/new";
     }
 
-    @PostMapping("/boards/new")
+    @PostMapping("/newBoard")
     public String create(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                          @Validated BoardDto boardDto, BindingResult bindingResult){
         log.info("create Board");
@@ -98,7 +98,7 @@ public class BoardController {
         return "redirect:/boards";
     }
 
-    @PostMapping("/boards/search")
+    @GetMapping("/boards/search")
     public String search(@RequestParam String keyword, @RequestParam String searchType, Model model){
         log.info("searchType={}", searchType);
 

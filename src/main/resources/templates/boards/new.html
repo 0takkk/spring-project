@@ -11,7 +11,7 @@
 
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
-    <form th:action="@{/boards/new}" th:object="${boardDto}" method="post">
+    <form th:action="@{/newBoard}" th:object="${boardDto}" method="post">
         <label th:for="title">제목</label>
         <div class="form-group">
             <input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요"
